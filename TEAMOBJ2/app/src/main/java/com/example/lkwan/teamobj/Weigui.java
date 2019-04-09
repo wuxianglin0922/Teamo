@@ -23,6 +23,10 @@ public class Weigui extends  MyFragrmetw {
         return R.layout.weig;
     }
 
+
+
+
+    
     @Override
     public void initView(View view, Bundle savetablewfa) {
         barChart= view.findViewById( R.id.barchar );
