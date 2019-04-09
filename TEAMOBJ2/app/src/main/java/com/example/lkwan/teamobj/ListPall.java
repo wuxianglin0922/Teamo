@@ -11,18 +11,18 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+
 
 public class ListPall extends Activity {
     Button button;
@@ -174,21 +174,24 @@ public class ListPall extends Activity {
         OkHttpClient okHttpClient=new OkHttpClient();
         final MediaType mediaType=MediaType.parse( "application/json; charset=utf-8" );
         Request request=new Request.Builder().url( "https://easy-mock.com/mock/5c8f3515c42b1c0235654282/jiaotong/lamplist" ).post( RequestBody.create( mediaType,"" ) ).build();
-        okHttpClient.newCall(  request).enqueue( new Callback() {
+        okHttpClient.newCall(  request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Request request, IOException e) {
 
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-        String body=   response.body().string();
+            public void onResponse(Response response) throws IOException {
+                String body=   response.body().string();
                 Message message=new Message();
                 message.what=1;
                 message.obj=body;
                 handler.sendMessage( message );
             }
-        } );
+        });
+
+
+
     }
     public Handler handler=new Handler(  ){
         @Override
